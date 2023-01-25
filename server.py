@@ -1,5 +1,5 @@
 import web
-web.config.debug = False
+web.config.debug = True
 
 urls = (
     '/', 'index'
