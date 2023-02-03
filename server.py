@@ -15,13 +15,15 @@ class index:
             pw='insigroup00',
             db='project00',
         )
-        albums = db.select('Album', limit=6)
-        artists = db.select('Artist', limit=6)
-        genres = db.select('Genre',limit=6) 
+        albums = db.select('Album', limit=5)
+        artists = db.select('Artist', limit=5)
+        genres = db.select('Genre',limit=5) 
+        customers= db.select('Customer', limit=5)
+        media = db.select('MediaType', limit=5)
         
         result = '<html><head><title>TEST</title></head><body>'
         result += '<table border="1">'
-        result += '<tr><th>id</th><th>Genres</th><th>Album</th><th>Artist</th></tr>'
+        result += '<tr><th>id</th><th>Genres</th><th>Album</th><th>Artist</th><th>Customer_Company</th><th>MediaType</th></tr>'
         for artist in artists:
             result += '<tr>'
             result += '<td>'+ str(artist.ArtistId) +'</td>'
@@ -32,6 +34,12 @@ class index:
                 result += '<td>' + album.Title + '</td>'
                 break
             result += '<td>' + artist.Name + '</td>'
+            for customer in customers:
+                result += '<td>' + str(customer.Company) + '</td>'
+                break
+            for mediatype in media:
+                result += '<td>' + mediatype.Name + '</td>'
+                break
             result += '</tr>'
         result += '</table>'
         result += '</body></html>'
