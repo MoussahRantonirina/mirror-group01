@@ -19,21 +19,17 @@ class Index:
         
         albums = db.select('Album', limit=6)
         artists = db.select('Artist', limit=6)
-        genres = db.select('Genre', limit=6)
-        
+         
         result = '<html><head><title>Servertest</title></head><body>'
         result += '<table border="1">'
-        result += '<tr><th>id</th><th>Genres</th><th>Artist</th><th>Album</th></tr>'
+        result += '<tr><th>id</th><th>Album</th><th>Artist</th></tr>'
         for artist in artists:
             result += '<tr>'
             result += '<td>'+ str(artist.ArtistId) +'</td>'
-            for genre in genres:
-                result += '<td>' + genre.Name +'</td>'
-                break
-            result += '<td>' + artist.Name + '</td>'
             for album in albums:
                 result += '<td>' + album.Title + '</td>'
                 break
+            result += '<td>' + artist.Name + '</td>'
             result += '</tr>'
         result += '</table>'
         result += '</body></html>'
