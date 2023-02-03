@@ -21,7 +21,7 @@ class index:
         
         result = '<html><head><title>TEST</title></head><body>'
         result += '<table border="1">'
-        result += '<tr><th>id</th><th>Album</th><th>Artist</th><th>Genres</th></tr>'
+        result += '<tr><th>id</th><th>Genres</th><th>Album</th><th>Artist</th></tr>'
         for artist in artists:
             result += '<tr>'
             result += '<td>'+ str(artist.ArtistId) +'</td>'
