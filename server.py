@@ -21,12 +21,15 @@ class index:
         customers= db.select('Customer', limit=5)
         media = db.select('MediaType', limit=5)
         
-        result = '<html><head><title>TEST</title></head><body>'
-        result += '<table border="1">'
-        result += '<tr><th>id</th><th>Genres</th><th>Album</th><th>Artist</th><th>Customer_Company</th><th>MediaType</th></tr>'
+        result = '<html><head><title>SERVER-GROUP001</title>'
+        result += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">'
+        result += '</head>'
+        result += '<body>'
+        result += '<table class"table  table-striped">'
+        result += '<tr class="table-bordered thead-dark text-center"><th class="p-3 table-dark">id</th><th class="p-3 table-dark">Genres</th><th class="p-3 table-dark">Album</th><th class="p-3 table-dark">Artist</th><th class="p-3 table-dark">Customer_Company</th><th class="p-3 table-dark">MediaType</th></tr>'
         for artist in artists:
-            result += '<tr>'
-            result += '<td>'+ str(artist.ArtistId) +'</td>'
+            result += '<tr class="table table-bordered">'
+            result += '<td class="table-primary p-2 ">'+ str(artist.ArtistId) +'</td>'
             for genre in genres:
                 result += '<td>' + genre.Name + '</td>'
                 break
