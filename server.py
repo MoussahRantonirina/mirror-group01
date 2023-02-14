@@ -1,81 +1,71 @@
 import web
+import nav 
+from database import Db
 web.config.debug = True
 
 urls = (
-    '/', 'index'
+    '/', 'index',
+    '/liste','liste'
 )
-
 class index:
     def GET(self):
-        db = web.database(
-            dbn='mysql',
-            host='tmp-insi.rktmb.org',
-            port=3306,
-            user='insigroup00',
-            pw='insigroup00',
-            db='project00',
-        )
-        albums = db.select('Album', limit=5)
-        artists = db.select('Artist', limit=5)
-        genres = db.select('Genre',limit=5) 
-        customers= db.select('Customer', limit=5)
-        media = db.select('MediaType', limit=5)
-        
-        result = '<html><head><title>SERVER-GROUP001</title>'
+        return '''<html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Accueil</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+            <style>
+                body{
+                    background-image: url('https://w.wallhaven.cc/full/1k/wallhaven-1kzryg.png');
+                    background-size: cover;
+                }
+                #msg{
+                    text-align: center;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: white;
+                }
+            </style>
+        </head>
+        <body>
+            ''' + nav.navbar() + '''
+            <div id="msg">
+                <h1>Bienvenue sur Music</h1>
+                <p>Découvrez notre top 10 des meilleures musiques du moment</p>
+            </div>
+        </body>
+        </html>
+        '''  
+class liste:
+    def GET(self):
+        d = Db()
+        db = d.getDb()
+        albums = db.select('Album', limit=10)
+        artists = db.select('Artist', limit=10)
+        result = '<html><head><meta charset="UTF-8"><title>Tracklist</title>'
         result += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">'
         result += '</head>'
         result += '<body>'
-        result += '<nav class="navbar navbar-expand-lg navbar-light bg-primary">'
-        result += '<a class="navbar-brand" href="#">Navbar</a>'
-        result += '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">'
-        result += '<span class="navbar-toggler-icon"></span>'
-        result += '</button>'
-        result += '<div class="collapse navbar-collapse" id="navbarNav">'
-        result += '<ul class="navbar-nav">'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">ID</a>'
-        result += '</li>'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">Genres</a>'
-        result += '</li>'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">Album</a>'
-        result += '</li>'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">Artist</a>'
-        result += '</li>'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">Customer Company</a>'
-        result += '</li>'
-        result += '<li class="nav-item">'
-        result += '<a class="nav-link" href="#">Media Type</a>'
-        result += '</li>'
-        result += '</ul>'
-        result += '</div>'
-        result += '</nav>'
-        result += '<table class"table-striped">'
-        result += '<tr class="table-bordered thead-dark text-center"><th class="p-3 table-dark">id</th><th class="p-3 table-dark">Genres</th><th class="p-3 table-dark">Album</th><th class="p-3 table-dark">Artist</th><th class="p-3 table-dark">Customer_Company</th><th class="p-3 table-dark">MediaType</th></tr>'
-        for artist in artists:
+        result += nav.navbar()
+        result += '<div class="container">'
+        result += '<h4 class="text-center my-5">Notre top 10 des meilleures musiques du mois</h4>'
+        result += '<table class="table table-striped table-bordered mx-auto">'
+        result += '<tr class="table-bordered thead-dark text-center"><th class="p-3 table-dark">ID</th><th class="p-3 table-dark">Artist</th><th class="p-3 table-dark">Album Title</th></tr>'
+        for artist in artists: 
             result += '<tr class="table table-striped table-bordered">'
-            result += '<td class="table-primary table-striped p-2 ">'+ str(artist.ArtistId) +'</td>'
-            for genre in genres:
-                result += '<td>' + genre.Name + '</td>'
-                break
+            result += '<td class="table-primary p-2 ">'+ str(artist.ArtistId) +'</td>'
             for album in albums:
+                result += '<td>' + artist.Name + '</td>'
                 result += '<td>' + album.Title + '</td>'
-                break
-            result += '<td>' + artist.Name + '</td>'
-            for customer in customers:
-                result += '<td>' + str(customer.Company) + '</td>'
-                break
-            for mediatype in media:
-                result += '<td>' + mediatype.Name + '</td>'
                 break
             result += '</tr>'
         result += '</table>'
+        result += '</div>'
         result += '</body></html>'
         return result
-
+              
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.run()
