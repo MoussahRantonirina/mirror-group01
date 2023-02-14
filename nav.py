@@ -8,7 +8,7 @@ def navbar():
     result += '<a class="nav-link text-light" href="/">Accueil</a>'
     result += '</li>'
     result += '<li class="nav-item">'
-    result += '<a class="nav-link text-light" href="#">Tracklist</a>'
+    result += '<a class="nav-link text-light" href="/selection">Classement</a>'
     result += '</li>'
     result += '</ul>'
     result += '</div>'
