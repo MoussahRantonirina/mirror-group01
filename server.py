@@ -5,7 +5,7 @@ web.config.debug = True
 
 urls = (
     '/', 'index',
-    '/selection','selection'
+    '/liste','liste'
 )
 class index:
     def GET(self):
@@ -38,7 +38,7 @@ class index:
         </body>
         </html>
         '''  
-class selection:
+class liste:
     def GET(self):
         d = Db()
         db = d.getDb()
