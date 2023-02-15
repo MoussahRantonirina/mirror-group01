@@ -1,11 +1,13 @@
 import web
 import nav 
+from details import details
 from database import Db
 web.config.debug = True
 
 urls = (
     '/', 'index',
-    '/liste','liste'
+    '/liste','liste',
+    '/details','details'
 )
 class index:
     def GET(self):
@@ -65,7 +67,7 @@ class liste:
         result += '</div>'
         result += '</body></html>'
         return result
-              
+
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.run()
